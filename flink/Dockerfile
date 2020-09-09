@@ -9,7 +9,7 @@ FROM $BASE_IMAGE
 USER root
 WORKDIR /opt/flink
 RUN apt-get update \
-      && apt-get install -y --no-install-recommends jq gettext procps \
+      && apt-get install -y --no-install-recommends jq gettext procps netcat \
       && rm -rf /var/lib/apt/lists/*
 COPY --chown=flink:flink scripts $FLINK_HOME/bin/cobli-scripts
 EXPOSE 8081 6122 6123 6124 6125
