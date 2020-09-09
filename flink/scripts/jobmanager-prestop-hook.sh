@@ -54,9 +54,24 @@ create_savepoint_ref() {
   log_info "Savepoint ref file generated in: <$savepoint_ref_path>"
 }
 
+check_rest_api_availability() {
+  local jm_addr jm_port
+  jm_addr=${FLINK_CONF_JOBMANAGER_RPC_ADDRES:-"localhost"}
+  jm_port=${FLINK_CONF_REST_PORT:-"8081"}
+  if nc -z "$jm_addr" "$jm_port" > /dev/null 2>&1 ; then
+    return 0
+  else
+    log_err "Job manager REST API not available"
+    return 1
+  fi
+}
+
 entrypoint() {
   local savepoint_path
-  savepoint_path="$(stop_job)"
+  if check_rest_api_availability; then
+    echo entrou
+    savepoint_path="$(stop_job)"
+  fi
   if [ "${savepoint_path:-null}" != "null" ]; then
     create_savepoint_ref "$savepoint_path"
   else
