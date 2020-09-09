@@ -61,6 +61,7 @@ entrypoint() {
     create_savepoint_ref "$savepoint_path"
   else
     log_err "Could not generate a savepoint"
+    exit 1
   fi
 }
 
