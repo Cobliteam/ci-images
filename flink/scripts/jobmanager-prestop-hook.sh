@@ -56,7 +56,7 @@ create_savepoint_ref() {
 
 check_rest_api_availability() {
   local jm_addr jm_port
-  jm_addr=${FLINK_CONF_JOBMANAGER_RPC_ADDRES:-"localhost"}
+  jm_addr=${FLINK_CONF_JOBMANAGER_RPC_ADDRESS:-"localhost"}
   jm_port=${FLINK_CONF_REST_PORT:-"8081"}
   if nc -z "$jm_addr" "$jm_port" > /dev/null 2>&1 ; then
     return 0
